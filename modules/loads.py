@@ -2,6 +2,7 @@
 from typing import List
 
 # Сторонние импорты
+import yfinance as yf
 import numpy as np
 import pandas as pd
 from pandas.core import series
@@ -14,7 +15,7 @@ from typing import List
 # Локальные импорты
 
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def loadFile(fileWithQuotes: UploadedFile):
     df = pd.read_csv(fileWithQuotes)
 
@@ -30,4 +31,12 @@ def getSeries(df: DataFrame):
     series = df.dt
 
     return series
+
+
+@st.cache
+def get_ticker_history(ticker: str, dateStart='2010-01-23', dateEnd='2021-05-31'):
+
+   df = yf.download(ticker, start=dateStart, end=dateEnd)
+
+   return df
 
