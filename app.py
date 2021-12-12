@@ -62,14 +62,14 @@ if len(df) > 0:
         if t_pri_val - 2 > 0:
             
             sqrtValue1 = float(np.sqrt(t_pri[i] - 2))
-            sqrtValue2 = float(np.sqrt((t_pri[i] - 1) / t_pri[i]))
+            sqrtValue2 = float(np.sqrt(t_pri[i] - 1))
             signValue = float(np.sign(E_pred[i]))
             diffValue = float(dt[i] - E_pred[i])
             arrValue = np.array(dt[i - 1::-1])[:t_pri_val - 1]
             pieceValue = float(t_pri[i] - 1) * float(E_pred[i]**2)
             sqrtValue3 = float(np.sqrt(np.sum(np.square(arrValue)) - pieceValue))
 
-            t_st = sqrtValue1 * sqrtValue2 * signValue * diffValue / sqrtValue3
+            t_st = sqrtValue1 * ((sqrtValue2 * signValue * diffValue) / sqrtValue3)
             t_val.append(t_st)
 
             if t_val[i] > 0:
@@ -94,7 +94,7 @@ if len(df) > 0:
     df['T1 - сегодня'] = t_val
 
     st.markdown('Add new column:')
-    st.write(df.head(40))
+    st.write(df.tail())
 
     rost = []
     trend = list(df[df['n-2=степень свободы'] == 0]['Et=текущий тренд'])
